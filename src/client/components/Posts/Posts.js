@@ -19,7 +19,7 @@ class Posts extends Component {
   render() {
     return (
       <div>
-        All post:------
+        All post:-
         {/* {this.renderPosts()} */}
         <>
           <Row className="justify-content-md">
