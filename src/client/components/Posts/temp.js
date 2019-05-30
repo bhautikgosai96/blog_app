@@ -3,68 +3,61 @@ import axios from "axios";
 import { Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { postStore } from "../../actions";
 
 class Posts extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      posts: []
+      post: [],
+      activePage: 1,
+      tempArray: [],
+      dis: "disabled",
+      totalPage: 0,
+      per_page: 10
     };
   }
-
-  onStore(e) {
-    console.log(e);
-    this.props.onStorePosts(e);
-  }
   componentDidMount() {
-    axios
-      .get("http://localhost/wordpress/wp-json/wp/v2/posts")
-      .then(response => {
-        console.log(response.data);
-        this.setState({ posts: response.data });
-        this.props.onAllPostsStore(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.postStore();
+  }
+
+  renderPosts() {
+    return this.props.posts.map(p => {
+      return <h4 key={p.id}>{p.title.rendered}</h4>;
+    });
   }
 
   render() {
     return (
-      <>
-        <Row className="justify-content-md">
-          {this.state.posts.map(post => (
-            <Col key={post.id} md="auto">
-              <Card bg="secondary" text="white" style={{ width: "18rem" }}>
-                <Card.Header>{post.id}</Card.Header>
-                <Card.Body>
-                  {" "}
-                  <Card.Title>{post.title.rendered}</Card.Title>
-                  <Card.Text>
-                    <Link
-                      to={`/fullPost/${post.id}`}
-                      onClick={e => this.onStore(post)}
-                    >
-                      Full Post
-                    </Link>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-              <br />
-            </Col>
-          ))}
-        </Row>
-      </>
+      <div style={{ marginTop: "5%" }}>
+        {/* {this.renderPosts()} */}
+        <>
+          <Row className="justify-content-md">
+            {this.props.posts.map(post => (
+              <Col key={post.id} md="auto">
+                <Card bg="secondary" text="white" style={{ width: "18rem" }}>
+                  <Card.Header>{post.id}</Card.Header>
+                  <Card.Body>
+                    {" "}
+                    <Card.Title>{post.title.rendered}</Card.Title>
+                    <Card.Text>
+                      <Link to={`/fullPost/${post.id}`}>Full Post</Link>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <br />
+              </Col>
+            ))}
+          </Row>
+        </>
+      </div>
     );
   }
 }
-//export default Posts;
-const mapStateToProps = state => {
-  return {
-    ps: state.posts
-  };
-};
+
+function mapStateToProps(state) {
+  return { posts: state.posts };
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -76,8 +69,7 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { postStore }
 )(Posts);
