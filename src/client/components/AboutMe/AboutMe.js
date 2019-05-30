@@ -4,7 +4,9 @@ class AboutMe extends Component {
   render() {
     return (
       <>
-        <h1>About Me</h1>
+        <h4 style={{ marginTop: "2%", marginLeft: "1%" }}>
+          Develop By:- Bhautik Gosai
+        </h4>
       </>
     );
   }

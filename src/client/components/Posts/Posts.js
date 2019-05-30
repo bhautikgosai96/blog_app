@@ -65,7 +65,7 @@ class Posts extends Component {
               {" "}
               <Card.Title>{posts.title.rendered}</Card.Title>
               <Card.Text>
-                {/* <Link to={`/fullPost/${post.id}`}>Full Post</Link> */}
+                <Link to={`/fullPost/${posts.id}`}>Full Post</Link>
               </Card.Text>
             </Card.Body>
           </Card>
