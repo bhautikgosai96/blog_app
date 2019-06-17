@@ -9,7 +9,7 @@ export default () => {
   return (
     <React.Fragment>
       <Navbar />
-      <div style={{ minHeight: "387px" }}>
+      <div style={{ minHeight: "438px" }}>
         <Route exact path="/:pageNumber" component={Home} />
         <Route exact path="/fullPost/:id" component={FullPost} />
         <Route exact path="/category/:categoryId" component={Category} />
