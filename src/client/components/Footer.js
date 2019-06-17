@@ -24,7 +24,7 @@ class Footer extends Component {
                   paddingLeft: "1%"
                 }}
               >
-                Developed By Bhautik
+                Developed By Bhautik Gosai
               </h6>
             </li>
           </ul>
