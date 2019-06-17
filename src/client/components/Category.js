@@ -14,7 +14,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.categoryId);
+    //console.log(this.props.match.params.categoryId);
     axios
       .get(
         "https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts?categories=" +
