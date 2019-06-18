@@ -117,7 +117,22 @@ class Home extends Component {
                                   {" "}
                                   Category:-
                                 </span>{" "}
-                                {posts.cat_name.map(name => {
+                                {posts._embedded["wp:term"].map(name => {
+                                  console.log(name);
+                                  return name.map(n => {
+                                    return (
+                                      <Link
+                                        to={`/category/${n.id}`}
+                                        onClick={() => {
+                                          this.changeCategory(n.id);
+                                        }}
+                                      >
+                                        {n.name}
+                                      </Link>
+                                    );
+                                  });
+                                })}
+                                {/* {posts.cat_name.map(name => {
                                   return (
                                     <Link
                                       to={`/category/${name.id}`}
@@ -128,7 +143,7 @@ class Home extends Component {
                                       {name.name}
                                     </Link>
                                   );
-                                })}
+                                })} */}
                               </p>{" "}
                             </Card.Footer>
                           </Card>

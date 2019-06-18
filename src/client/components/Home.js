@@ -8,10 +8,11 @@ class Home extends Component {
   render() {
     return (
       <React.Fragment>
+        <h1>hello</h1>
         <PostConsumer>
           {value => {
             let pp = value.post;
-
+            console.log(pp);
             let actpg = value.activePage;
 
             if (this.props.match.params.pageNumber) {
@@ -22,7 +23,7 @@ class Home extends Component {
 
             let count = 1;
             let page = 1;
-            const temp = pp;
+            let temp = pp;
             let link;
 
             temp.map(posts => {
@@ -38,9 +39,9 @@ class Home extends Component {
               } else {
                 count = count + 1;
               }
-              return 0;
             });
-
+            console.log(temp);
+            let cat_name = "wp:term";
             return (
               <div>
                 <Row className="justify-content-md">
@@ -58,7 +59,6 @@ class Home extends Component {
                             }}
                           />
                           <Card.Body>
-                            {/* {console.log(posts.excerpt.rendered)} */}
                             <Card.Title
                               dangerouslySetInnerHTML={{
                                 __html: posts.excerpt.rendered
@@ -76,17 +76,20 @@ class Home extends Component {
                                 {" "}
                                 Category:-
                               </span>{" "}
-                              {posts.cat_name.map(name => {
-                                return (
-                                  <Link
-                                    to={`/category/${name.id}`}
-                                    onClick={() => {
-                                      value.setSinglePost();
-                                    }}
-                                  >
-                                    {name.name}
-                                  </Link>
-                                );
+                              {posts._embedded["wp:term"].map(name => {
+                                console.log(name);
+                                return name.map(n => {
+                                  return (
+                                    <Link
+                                      to={`/category/${n.id}`}
+                                      onClick={() => {
+                                        value.setSinglePost();
+                                      }}
+                                    >
+                                      {n.name}
+                                    </Link>
+                                  );
+                                });
                               })}
                             </p>{" "}
                           </Card.Footer>

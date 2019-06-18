@@ -20,7 +20,7 @@ app.get("*", (req, res) => {
   const getPosts = () => {
     try {
       return axios.get(
-        "https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date"
+        "https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?_embed&per_page=100&order=desc&orderby=date"
       );
       // http://localhost/wordpress/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
       //https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
