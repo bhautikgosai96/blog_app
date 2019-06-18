@@ -18,14 +18,20 @@ class FullPost extends Component {
 
             return (
               <>
-                <h2
-                  dangerouslySetInnerHTML={{
-                    __html: post.title.rendered
-                  }}
-                />
-                <div
-                  dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                />
+                <div className="container">
+                  <div className="row">
+                    <h2
+                      dangerouslySetInnerHTML={{
+                        __html: post.title.rendered
+                      }}
+                    />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: post.content.rendered
+                      }}
+                    />
+                  </div>
+                </div>
               </>
             );
           }}
