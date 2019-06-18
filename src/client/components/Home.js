@@ -8,7 +8,6 @@ class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>hello</h1>
         <PostConsumer>
           {value => {
             let pp = value.post;
