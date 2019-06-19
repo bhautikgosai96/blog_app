@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { PostConsumer } from "../context";
+import { Row, Container } from "react-bootstrap";
 
 class FullPost extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <React.Fragment>
@@ -18,8 +16,8 @@ class FullPost extends Component {
 
             return (
               <>
-                <div className="container">
-                  <div className="row">
+                <Container>
+                  <Row className="justify-content-md">
                     <h2
                       dangerouslySetInnerHTML={{
                         __html: post.title.rendered
@@ -30,8 +28,8 @@ class FullPost extends Component {
                         __html: post.content.rendered
                       }}
                     />
-                  </div>
-                </div>
+                  </Row>
+                </Container>
               </>
             );
           }}

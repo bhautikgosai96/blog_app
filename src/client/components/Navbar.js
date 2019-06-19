@@ -36,11 +36,3 @@ export default () => {
     </PostConsumer>
   );
 };
-
-{
-  /* <Card.Title>
-                              {posts.cat_name.map(name => {
-                                return <Link to="">{name.name}</Link>;
-                              })}
-                            </Card.Title> */
-}

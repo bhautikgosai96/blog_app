@@ -16,14 +16,14 @@ class Home extends Component {
 
   componentDidMount() {
     //console.log(this.props.match.params.categoryId);
+    //https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=
     axios
       .get(
-        "https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?_embed=" +
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
           this.props.match.params.categoryId +
-          "&per_page=100&order=desc&orderby=date"
+          "&per_page=60&order=desc&orderby=date"
       )
       .then(response => {
-        console.log(response.data);
         this.setState({ category: response.data, isLoaded: true });
       })
       .catch(error => {
@@ -32,13 +32,13 @@ class Home extends Component {
   }
 
   changeCategory = id => {
-    console.log("params ", this.props.match.params.categoryId);
-    console.log("props ", id);
+    this.setState({ isLoaded: false });
+
     axios
       .get(
-        "https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/postss/?_embed=" +
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
           id +
-          "&per_page=100&order=desc&orderby=date"
+          "&per_page=60&order=desc&orderby=date"
       )
       .then(response => {
         console.log(response.data);
@@ -117,8 +117,7 @@ class Home extends Component {
                                   {" "}
                                   Category:-
                                 </span>{" "}
-                                {posts._embedded["wp:term"].map(name => {
-                                  console.log(name);
+                                {/* {posts._embedded["wp:term"].map(name => {
                                   return name.map(n => {
                                     return (
                                       <Link
@@ -131,8 +130,8 @@ class Home extends Component {
                                       </Link>
                                     );
                                   });
-                                })}
-                                {/* {posts.cat_name.map(name => {
+                                })} */}
+                                {posts._embedded["wp:term"][0].map(name => {
                                   return (
                                     <Link
                                       to={`/category/${name.id}`}
@@ -143,7 +142,7 @@ class Home extends Component {
                                       {name.name}
                                     </Link>
                                   );
-                                })} */}
+                                })}
                               </p>{" "}
                             </Card.Footer>
                           </Card>

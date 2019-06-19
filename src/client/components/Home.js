@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PostConsumer } from "../context";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 
@@ -39,11 +39,10 @@ class Home extends Component {
                 count = count + 1;
               }
             });
-            console.log(temp);
-            let cat_name = "wp:term";
+
             return (
-              <div>
-                <Row className="justify-content-md">
+              <Container>
+                <Row className="justify-content-md-center">
                   {temp.map(posts => {
                     return parseInt(actpg) === parseInt(posts.page_number) ? (
                       <Col key={posts.id} md="auto">
@@ -76,7 +75,6 @@ class Home extends Component {
                                 Category:-
                               </span>{" "}
                               {posts._embedded["wp:term"].map(name => {
-                                console.log(name);
                                 return name.map(n => {
                                   return (
                                     <Link
@@ -101,7 +99,7 @@ class Home extends Component {
                   })}
                 </Row>
                 <Pagination activePage={actpg} pageNmae="home" />
-              </div>
+              </Container>
             );
           }}
         </PostConsumer>
