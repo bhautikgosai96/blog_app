@@ -11,7 +11,7 @@ class Home extends Component {
         <PostConsumer>
           {value => {
             let pp = value.post;
-            console.log(pp);
+            //console.log(pp);
             let actpg = value.activePage;
 
             if (this.props.match.params.pageNumber) {
