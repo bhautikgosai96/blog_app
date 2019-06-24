@@ -21,7 +21,7 @@ class Home extends Component {
       .get(
         "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
           this.props.match.params.categoryId +
-          "&per_page=60&order=desc&orderby=date"
+          "&per_page=50&order=desc&orderby=date"
       )
       .then(response => {
         this.setState({ category: response.data, isLoaded: true });
@@ -38,7 +38,7 @@ class Home extends Component {
       .get(
         "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
           id +
-          "&per_page=60&order=desc&orderby=date"
+          "&per_page=50&order=desc&orderby=date"
       )
       .then(response => {
         console.log(response.data);
