@@ -11,7 +11,7 @@ class FullPost extends Component {
             let temp = value.post;
 
             let post;
-            if (temp.length) {
+            if (temp.length > 0) {
               post = temp.find(
                 post => post.id === parseInt(this.props.match.params.id)
               );

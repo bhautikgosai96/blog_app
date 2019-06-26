@@ -11,6 +11,7 @@ class Pagination extends Component {
             let totalPage = value.totalPage;
             let activePage = value.activePage;
             let categoryId = value.categoryId;
+
             let pageRoute;
             if (this.props.pageName == "Home") {
               pageRoute = "/";

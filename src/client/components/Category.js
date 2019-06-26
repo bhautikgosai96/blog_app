@@ -19,7 +19,7 @@ class Home extends Component {
       <React.Fragment>
         <PostConsumer>
           {value => {
-            const temp = value.post;
+            let temp = value.post;
             let link;
 
             temp.map(posts => {
@@ -27,7 +27,6 @@ class Home extends Component {
               let linkArray = link.split("<div>");
               posts["excerpt"]["rendered"] = linkArray[0];
             });
-            let actpg = value.activePage;
 
             if (value.isLoading) {
               return <h3>Loading.....</h3>;
@@ -50,7 +49,6 @@ class Home extends Component {
                               }}
                             />
                             <Card.Body>
-                              {/* {console.log(posts.excerpt.rendered)} */}
                               <Card.Title
                                 dangerouslySetInnerHTML={{
                                   __html: posts.excerpt.rendered

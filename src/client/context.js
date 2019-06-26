@@ -36,7 +36,8 @@ class PostProvider extends Component {
           activePage: 1,
           post: response.data,
           totalPage: response["headers"]["x-wp-totalpages"],
-          isLoading: false
+          isLoading: false,
+          categoryId: cId
         });
       })
       .catch(error => {
@@ -63,7 +64,6 @@ class PostProvider extends Component {
     axios
       .get(url)
       .then(response => {
-        console.log(response);
         if (type === "prev") {
           if (pgNumber >= 1) {
             this.setState({

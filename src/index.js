@@ -151,8 +151,6 @@ app.get("/", (req, res) => {
       return axios.get(
         "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts/?_embed&per_page=10&page=1&order=desc&orderby=date"
       );
-      // http://localhost/wordpress/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
-      //https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
     } catch (error) {
       console.log(error);
     }
@@ -189,16 +187,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-{
-  /* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> */
-}
