@@ -12,7 +12,11 @@ export default () => {
       <div style={{ minHeight: "438px" }}>
         <Route exact path="/:pageNumber" component={Home} />
         <Route exact path="/fullPost/:id" component={FullPost} />
-        <Route exact path="/category/:categoryId" component={Category} />
+        <Route
+          exact
+          path="/category/:categoryId/:pageId"
+          component={Category}
+        />
         <Route exact path="/" component={Home} />
       </div>
 

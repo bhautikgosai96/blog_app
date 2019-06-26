@@ -7,6 +7,7 @@ import { PostProvider } from "./client/context";
 import { StaticRouter } from "react-router-dom";
 import Routes from "./client/Routes";
 import axios from "axios";
+import template from "./template";
 
 const app = express();
 
@@ -14,13 +15,141 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
-app.get("*", (req, res) => {
-  //const post = { name: "bhuhtiagl" };
+app.get("/fullPost/:id", (req, res) => {
+  const getPosts = () => {
+    try {
+      return axios.get(
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts/" +
+          req.params.id
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getPosts()
+    .then(postData => {
+      let initialState = {
+        postArray: postData.data,
+        totalPage: postData["headers"]["x-wp-totalpages"],
+        activePage: req.params.id,
+        categoryId: 1
+      };
+      const app = renderToString(
+        <StaticRouter location={req.url} context={{}}>
+          <PostProvider posts={initialState}>
+            <Routes />
+          </PostProvider>
+        </StaticRouter>
+      );
+
+      res.send(
+        template({
+          body: app,
+
+          initialState: initialState
+        })
+      );
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.get("/category/:categoryId/:pageId", (req, res) => {
+  console.log(req.params.categoryId);
+  console.log(req.params.pageId);
+  const getPosts = () => {
+    try {
+      return axios.get(
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
+          req.params.categoryId +
+          "&per_page=10&page=" +
+          req.params.pageId +
+          "&order=desc&orderby=date"
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getPosts()
+    .then(postData => {
+      let initialState = {
+        postArray: postData.data,
+        totalPage: postData["headers"]["x-wp-totalpages"],
+        activePage: req.params.pageId,
+        categoryId: req.params.categoryId
+      };
+      const app = renderToString(
+        <StaticRouter location={req.url} context={{}}>
+          <PostProvider posts={initialState}>
+            <Routes />
+          </PostProvider>
+        </StaticRouter>
+      );
+
+      res.send(
+        template({
+          body: app,
+
+          initialState: initialState
+        })
+      );
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.get("/:pageNumber", (req, res) => {
+  const getPosts = () => {
+    try {
+      return axios.get(
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts/?_embed&per_page=10&page=" +
+          req.params.pageNumber +
+          "&order=desc&orderby=date"
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getPosts()
+    .then(postData => {
+      let initialState = {
+        postArray: postData.data,
+        totalPage: postData["headers"]["x-wp-totalpages"],
+        activePage: req.params.pageNumber,
+        categoryId: 1
+      };
+      const app = renderToString(
+        <StaticRouter location={req.url} context={{}}>
+          <PostProvider posts={initialState}>
+            <Routes />
+          </PostProvider>
+        </StaticRouter>
+      );
+
+      res.send(
+        template({
+          body: app,
+
+          initialState: initialState
+        })
+      );
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+app.get("/", (req, res) => {
   let post;
   const getPosts = () => {
     try {
       return axios.get(
-        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts/?_embed&per_page=50&order=desc&orderby=date"
+        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts/?_embed&per_page=10&page=1&order=desc&orderby=date"
       );
       // http://localhost/wordpress/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
       //https://rtcamp-blogapp.000webhostapp.com/wp-json/wp/v2/posts/?per_page=100&order=desc&orderby=date
@@ -31,37 +160,26 @@ app.get("*", (req, res) => {
 
   getPosts()
     .then(postData => {
-      post = postData.data;
+      let initialState = {
+        postArray: postData.data,
+        totalPage: postData["headers"]["x-wp-totalpages"],
+        activePage: 1,
+        categoryId: 1
+      };
       const app = renderToString(
         <StaticRouter location={req.url} context={{}}>
-          <PostProvider posts={post}>
+          <PostProvider posts={initialState}>
             <Routes />
           </PostProvider>
         </StaticRouter>
       );
 
-      const html = `<!DOCTYPE html>
-  <html>
-      <head> 
-      <base href="/"/>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      </head>
-      <body>
-          <div id="root">${app}</div>
-          <script>window.__INITIAL_DATA__ = ${serialize(post)}</script>
-          <script src="bundle.js"></script>
-      </body>
-  </html>`;
-      res.send(html);
+      res.send(
+        template({
+          body: app,
+          initialState: initialState
+        })
+      );
     })
     .catch(error => {
       console.log(error);

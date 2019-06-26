@@ -23,7 +23,7 @@ export default () => {
                   className="nav-link"
                   to="/"
                   onClick={() => {
-                    value.setActivePage(1, "home");
+                    value.setActivePage(1, "home", "Home", 1);
                   }}
                 >
                   Home

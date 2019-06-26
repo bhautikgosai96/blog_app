@@ -14,79 +14,30 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
-    //console.log(this.props.match.params.categoryId);
-    //https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=
-    axios
-      .get(
-        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
-          this.props.match.params.categoryId +
-          "&per_page=50&order=desc&orderby=date"
-      )
-      .then(response => {
-        this.setState({ category: response.data, isLoaded: true });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  changeCategory = id => {
-    this.setState({ isLoaded: false });
-
-    axios
-      .get(
-        "https://bhautikng143.000webhostapp.com/wp-json/wp/v2/posts?_embed&categories=" +
-          id +
-          "&per_page=50&order=desc&orderby=date"
-      )
-      .then(response => {
-        console.log(response.data);
-        this.setState({ category: response.data, isLoaded: true });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   render() {
     return (
       <React.Fragment>
         <PostConsumer>
           {value => {
-            let count = 1;
-            let page = 1;
-            const temp = this.state.category;
+            const temp = value.post;
             let link;
+
+            temp.map(posts => {
+              link = posts.excerpt.rendered;
+              let linkArray = link.split("<div>");
+              posts["excerpt"]["rendered"] = linkArray[0];
+            });
             let actpg = value.activePage;
 
-            if (this.props.match.params.pageNumber) {
-              actpg = this.props.match.params.pageNumber;
+            if (value.isLoading) {
+              return <h3>Loading.....</h3>;
             } else {
-              actpg = value.activePage;
-            }
-            temp.map(posts => {
-              posts["page_number"] = page;
-              link = posts.excerpt.rendered;
-
-              let linkArray = link.split("<div>");
-              //console.log(linkArray[0]);
-              posts["excerpt"]["rendered"] = linkArray[0];
-              if (count >= 10) {
-                count = 1;
-                page = page + 1;
-              } else {
-                count = count + 1;
-              }
-              return 0;
-            });
-            if (this.state.isLoaded) {
               return (
                 <div>
                   {}
                   <Row className="justify-content-md">
                     {temp.map(posts => {
-                      return parseInt(actpg) === parseInt(posts.page_number) ? (
+                      return (
                         <Col key={posts.id} md="auto">
                           <Card
                             bg="secondary"
@@ -116,27 +67,14 @@ class Home extends Component {
                                 <span style={{ color: "white" }}>
                                   {" "}
                                   Category:-
-                                </span>{" "}
-                                {/* {posts._embedded["wp:term"].map(name => {
-                                  return name.map(n => {
-                                    return (
-                                      <Link
-                                        to={`/category/${n.id}`}
-                                        onClick={() => {
-                                          this.changeCategory(n.id);
-                                        }}
-                                      >
-                                        {n.name}
-                                      </Link>
-                                    );
-                                  });
-                                })} */}
+                                </span>
+
                                 {posts._embedded["wp:term"][0].map(name => {
                                   return (
                                     <Link
-                                      to={`/category/${name.id}`}
+                                      to={`/category/${name.id}/1`}
                                       onClick={() => {
-                                        this.changeCategory(name.id);
+                                        value.setCategory(name.id);
                                       }}
                                     >
                                       {name.name}
@@ -148,20 +86,16 @@ class Home extends Component {
                           </Card>
                           <br />
                         </Col>
-                      ) : (
-                        <></>
                       );
                     })}
                   </Row>
 
                   <Pagination
                     category={this.state.category}
-                    pageNmae="category"
+                    pageName="category"
                   />
                 </div>
               );
-            } else {
-              return <h3>Loading.....</h3>;
             }
           }}
         </PostConsumer>
