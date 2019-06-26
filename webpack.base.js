@@ -1,3 +1,4 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   module: {
     rules: [
@@ -17,7 +18,25 @@ module.exports = {
             plugins: ["@babel/plugin-proposal-class-properties"]
           }
         }
+      },
+      {
+        test: /\.css?$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "styles.css"
+    })
+  ],
+  devtool: "inline-source-map"
 };

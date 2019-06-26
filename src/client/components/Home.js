@@ -3,7 +3,6 @@ import { PostConsumer } from "../context";
 import { Card, Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
-import axios from "axios";
 
 class Home extends Component {
   render() {

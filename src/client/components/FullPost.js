@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PostConsumer } from "../context";
 import { Row, Container } from "react-bootstrap";
 
+import "./style.css";
 class FullPost extends Component {
   render() {
     return (
